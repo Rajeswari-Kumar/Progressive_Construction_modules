@@ -1,0 +1,94 @@
+using UnityEngine;
+
+public class Procedural_generation : MonoBehaviour
+{
+    public float buildingWidth = 10f;
+    public float buildingHeight = 3f;
+    public float wallThickness = 0.2f;
+
+    public GameObject wallPrefab;
+    public GameObject windowPrefab;
+    public GameObject doorPrefab;
+
+    public int windowsPerWall = 2;
+
+    void Start()
+    {
+        GenerateBuilding();
+    }
+
+    void GenerateBuilding()
+    {
+        // FRONT WALL (with door)
+        GameObject frontWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(0, buildingHeight / 2, buildingWidth / 2), Quaternion.identity);
+        PlaceDoor(frontWall.transform, buildingWidth, buildingHeight);
+
+        // BACK WALL (with windows)
+        GameObject backWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(0, buildingHeight / 2, -buildingWidth / 2), Quaternion.Euler(0, 180, 0));
+        PlaceWindows(backWall.transform, buildingWidth);
+
+        // LEFT WALL (with windows)
+        GameObject leftWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(-buildingWidth / 2, buildingHeight / 2, 0), Quaternion.Euler(0, -90, 0));
+        PlaceWindows(leftWall.transform, buildingWidth);
+
+        // RIGHT WALL (with windows)
+        GameObject rightWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(buildingWidth / 2, buildingHeight / 2, 0), Quaternion.Euler(0, 90, 0));
+        PlaceWindows(rightWall.transform, buildingWidth);
+    }
+
+    GameObject InstantiateWall(float width, float height, Vector3 position, Quaternion rotation)
+    {
+        GameObject wall = Instantiate(wallPrefab, position, rotation, transform);
+        wall.transform.localScale = new Vector3(width, height, wallThickness);
+        return wall;
+    }
+
+    //void PlaceDoor(Transform wall, float wallWidth)
+    //{
+    //    if (doorPrefab == null) return;
+    //    Vector3 doorPos = wall.position + new Vector3(0, 1, -wallThickness / 2);
+    //    Instantiate(doorPrefab, doorPos, wall.rotation, wall);
+    //}
+
+    void PlaceDoor(Transform wall, float wallWidth, float wallHeight)
+    {
+        if (doorPrefab == null) return;
+
+        //float doorHeight = doorPrefab.transform.localScale.y;
+        float doorHeight = wallHeight / 10f;
+        Vector3 doorPos = wall.position + new Vector3(0, -wall.localScale.y, -wallThickness / 2);
+
+        GameObject door = Instantiate(doorPrefab, doorPos, wall.rotation, wall);
+        door.transform.localScale = new Vector3(1f, doorHeight, wallThickness / 2); // Adjust width/height as needed
+    }
+
+
+    void PlaceWindows(Transform wall, float wallWidth)
+    {
+        if (windowPrefab == null || windowsPerWall <= 0) return;
+        GameObject WindowPrefab = windowPrefab;
+        float spacing = wallWidth / (windowsPerWall + 1);
+        for (int i = 1; i <= windowsPerWall; i++)
+        {
+            //MaintainWorldScale(windowPrefab.transform, wall);
+            Vector3 windowPos = wall.position + wall.right * (spacing * i - wallWidth / 2);
+            windowPos.y += 0.05f; // typical window height
+            windowPos.z -= wallThickness / 5;
+            GameObject window = Instantiate(WindowPrefab, windowPos, wall.rotation, wall);
+            Vector3 scaleWindow = new Vector3(wallWidth / 70 ,windowPrefab.transform.localScale.y, windowPrefab.transform.localScale.z+2);
+            window.transform.localScale = scaleWindow;
+            //MaintainWorldScale(window.transform, wall);
+        }
+    }
+
+    void MaintainWorldScale(Transform child, Transform parent)
+    {
+        Vector3 parentScale = parent.lossyScale;
+        child.localScale = new Vector3(
+            1f / parentScale.x,
+            1f / parentScale.y,
+            1f / parentScale.z
+        );
+    }
+
+}
