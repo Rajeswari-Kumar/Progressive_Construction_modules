@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(XRGrabInteractable))]
@@ -8,15 +9,27 @@ public class Move_around_windows : MonoBehaviour
     public Axis movementAxis = Axis.X;
 
     public XRGrabInteractable grabInteractable;
-    public Transform interactorTransform;
-    public Vector3 initialGrabOffset;
+
+    [SerializeField] private InputActionProperty moveAction; // From controller
+    [SerializeField] private float moveSpeed = 0.5f;
+
+    private bool isGrabbed = false;
 
     private void Awake()
     {
         grabInteractable = GetComponent<XRGrabInteractable>();
-
         grabInteractable.selectEntered.AddListener(OnGrab);
         grabInteractable.selectExited.AddListener(OnRelease);
+    }
+
+    private void OnEnable()
+    {
+        moveAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.action.Disable();
     }
 
     private void OnDestroy()
@@ -27,38 +40,38 @@ public class Move_around_windows : MonoBehaviour
 
     private void OnGrab(SelectEnterEventArgs args)
     {
-        interactorTransform = args.interactorObject.transform;
-        initialGrabOffset = transform.position - interactorTransform.position;
-        Debug.Log("Grab");
+        isGrabbed = true;
     }
 
     private void OnRelease(SelectExitEventArgs args)
     {
-        interactorTransform = null;
+        isGrabbed = false;
     }
 
     private void Update()
     {
-        if (interactorTransform == null) return;
+        if (!isGrabbed) return;
 
-        Vector3 targetPosition = interactorTransform.position + initialGrabOffset;
-        Vector3 currentPosition = transform.position;
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
 
-        Vector3 newPosition = currentPosition;
+        if (input == Vector2.zero) return;
 
+        Vector3 moveDirection = Vector3.zero;
+
+        // Choose axis
         switch (movementAxis)
         {
             case Axis.X:
-                newPosition.x = targetPosition.x;
+                moveDirection = new Vector3(input.x, 0, 0);
                 break;
             case Axis.Y:
-                newPosition.y = targetPosition.y;
+                moveDirection = new Vector3(0, input.y, 0);
                 break;
             case Axis.Z:
-                newPosition.z = targetPosition.z;
+                moveDirection = new Vector3(0, 0, input.y); // forward/back
                 break;
         }
 
-        transform.position = newPosition;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 }

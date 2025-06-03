@@ -54,7 +54,7 @@ public class Scale_windows : MonoBehaviour
         }
         else if (RightTriggerScaleUpHeight.action.IsPressed() && LeftTriggerScaleUpWidth.action.IsPressed())
         {
-            //ScaleWindow(false);
+            ScaleWindow(false);
         }
     }
     private Transform[] GetNeighbourWindows()

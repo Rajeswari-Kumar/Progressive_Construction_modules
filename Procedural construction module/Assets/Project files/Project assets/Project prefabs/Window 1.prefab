@@ -244,7 +244,19 @@ MonoBehaviour:
         m_CallState: 2
   m_FirstSelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3532322536459750876}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_LastSelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -315,8 +327,8 @@ MonoBehaviour:
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
-  m_TrackPosition: 1
-  m_SmoothPosition: 1
+  m_TrackPosition: 0
+  m_SmoothPosition: 0
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
   m_TrackRotation: 0
@@ -414,10 +426,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518520a012c147e409fd7afdea7976fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementAxis: 0
-  grabInteractable: {fileID: 0}
-  interactorTransform: {fileID: 0}
-  initialGrabOffset: {x: 0, y: 0, z: 0}
+  movementAxis: 2
+  grabInteractable: {fileID: 7050222804343410271}
+  moveAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b21476bc-ee89-4280-8bc0-d4f46e0c82e9
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6836678620262788259, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  moveSpeed: 0.5
 --- !u!1001 &5956075588509462412
 PrefabInstance:
   m_ObjectHideFlags: 0
