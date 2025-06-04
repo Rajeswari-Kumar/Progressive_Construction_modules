@@ -786,9 +786,9 @@
                     "name": "Move interiors joy stick",
                     "type": "Value",
                     "id": "9a4c23f7-e84c-40de-9237-f252c245e3f5",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": true
                 }
             ],
@@ -961,7 +961,7 @@
                 {
                     "name": "",
                     "id": "c2d653ef-da57-4ff8-ac1d-e48861725e3e",
-                    "path": "",
+                    "path": "<XRController>{LeftHand}/primary2DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

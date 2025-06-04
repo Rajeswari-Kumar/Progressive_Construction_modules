@@ -34,6 +34,9 @@ public class Procedural_generation : MonoBehaviour
         // RIGHT WALL (with windows)
         GameObject rightWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(buildingWidth / 2, buildingHeight / 2, 0), Quaternion.Euler(0, 90, 0));
         PlaceWindows(rightWall.transform, buildingWidth);
+
+        GenerateCeiling();
+
     }
 
     GameObject InstantiateWall(float width, float height, Vector3 position, Quaternion rotation)
@@ -63,23 +66,33 @@ public class Procedural_generation : MonoBehaviour
     }
 
 
-    void PlaceWindows(Transform wall, float wallWidth)
+    public void PlaceWindows(Transform wall, float wallWidth)
     {
         if (windowPrefab == null || windowsPerWall <= 0) return;
         GameObject WindowPrefab = windowPrefab;
         float spacing = wallWidth / (windowsPerWall + 1);
         for (int i = 1; i <= windowsPerWall; i++)
         {
-            //MaintainWorldScale(windowPrefab.transform, wall);
             Vector3 windowPos = wall.position + wall.right * (spacing * i - wallWidth / 2);
             windowPos.y += 0.05f; // typical window height
             windowPos.z -= wallThickness / 5;
-            GameObject window = Instantiate(WindowPrefab, windowPos, wall.rotation, wall);
-            Vector3 scaleWindow = new Vector3(wallWidth / 70 ,windowPrefab.transform.localScale.y, windowPrefab.transform.localScale.z+2);
+            GameObject window = Instantiate(WindowPrefab, windowPos, wall.rotation);
+            window.transform.parent = wall.transform;
+            Vector3 scaleWindow = new Vector3(window.transform.localScale.x,window.transform.localScale.y, window.transform.localScale.z + 1.5f);
             window.transform.localScale = scaleWindow;
-            //MaintainWorldScale(window.transform, wall);
         }
     }
+
+    void GenerateCeiling()
+    {
+        float ceilingHeight = buildingHeight; // Top of the building
+        Vector3 ceilingPos = new Vector3(0, ceilingHeight, 0);
+        Quaternion ceilingRot = Quaternion.Euler(-90, 0, 0); // Horizontal orientation
+
+        GameObject ceiling = Instantiate(wallPrefab, ceilingPos, ceilingRot, transform);
+        ceiling.transform.localScale = new Vector3(buildingWidth, buildingWidth, wallThickness);
+    }
+
 
     void MaintainWorldScale(Transform child, Transform parent)
     {

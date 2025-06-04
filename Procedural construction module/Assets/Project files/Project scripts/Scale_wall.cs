@@ -3,15 +3,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Scale_windows : MonoBehaviour
+public class Scale_wall : MonoBehaviour
 {
     public XRBaseInteractor currentInteractor;
     public float scaleAmount = 0.001f;
-
+    public float LastWallWidth;
     [SerializeField] public InputActionProperty LeftTriggerScaleUpWidth;
     [SerializeField] public InputActionProperty RightTriggerScaleUpHeight;
-    [SerializeField] public InputActionProperty LeftGrabScaleDownWidth;
-    [SerializeField] public InputActionProperty RightGrabScaleDownHeight;
+    [SerializeField] public InputActionProperty XButtonScaleDownWidth;
+
 
     //private void OnEnable()
     //{
@@ -26,7 +26,10 @@ public class Scale_windows : MonoBehaviour
     //    interactable.hoverEntered.RemoveListener(OnHoverEnter);
     //    interactable.hoverExited.RemoveListener(OnHoverExit);
     //}
-
+    private void Start()
+    {
+        LastWallWidth = this.transform.localScale.x;
+    }
     public void OnHoverEnter(HoverEnterEventArgs args)
     {
         currentInteractor = args.interactor;
@@ -43,37 +46,23 @@ public class Scale_windows : MonoBehaviour
 
         string interactorName = currentInteractor.name.ToLower();
 
-        // Right hand: Trigger -> increase height, Grab -> decrease height
-        if (interactorName.Contains("right"))
+        if (interactorName.Contains("right") && RightTriggerScaleUpHeight.action.IsPressed())
         {
-            if (RightTriggerScaleUpHeight.action.IsPressed())
-            {
-                ScaleWindow(true);  // Increase height
-            }
-            else if (RightGrabScaleDownHeight.action.IsPressed())
-            {
-                ScaleWindow(false);
-                Debug.Log("decreaee");// Decrease height
-            }
+            ScaleWall(true); // Scale up height
+            //RescaleNeighbourWindow(false, GetNeighbourWindows());
         }
-
-        // Left hand: Trigger -> increase width, Grab -> decrease width
-        else if (interactorName.Contains("left"))
+        else if (interactorName.Contains("left") && LeftTriggerScaleUpWidth.action.IsPressed())
         {
-            if (LeftTriggerScaleUpWidth.action.IsPressed())
-            {
-                ScaleWindow(true);  // Increase width
-            }
-            else if (LeftGrabScaleDownWidth.action.IsPressed())
-            {
-                ScaleWindow(false); // Decrease width
-            }
+            ScaleWall(true);// Scale down width
         }
-
+        else if (RightTriggerScaleUpHeight.action.IsPressed() && LeftTriggerScaleUpWidth.action.IsPressed())
+        {
+            ScaleWall(false);
+        }
     }
     private Transform[] GetNeighbourWindows()
     {
-        Transform parent = transform.parent;
+        Transform parent = this.transform;
         if (parent == null) return new Transform[0];
 
         var neighbours = new System.Collections.Generic.List<Transform>();
@@ -100,7 +89,7 @@ public class Scale_windows : MonoBehaviour
     //    transform.localScale = newScale;
     //}
 
-    private void ScaleWindow(bool scaleUp)
+    private void ScaleWall(bool scaleUp)
     {
         float direction = scaleUp ? 1f : -1f;
 
@@ -117,7 +106,43 @@ public class Scale_windows : MonoBehaviour
             // Scale only width (X-axis)
             newScale.x += direction * scaleAmount;
             newScale.x = Mathf.Max(newScale.x, 0.1f); // Clamp to min width
+
+
+            Transform[] existingWindows = GetNeighbourWindows();
+            int NumberOfWindowsPerWall = existingWindows.Length;
+
+            DeletePreviousWindows(existingWindows);
+            FindObjectOfType<Procedural_generation>().PlaceWindows(this.transform, newScale.x);
+
+            float wallWidth = transform.localScale.x;
+
+            float WallWidthExceeds = LastWallWidth / NumberOfWindowsPerWall;
+            
+            if (Mathf.RoundToInt(WallWidthExceeds) == Mathf.RoundToInt(wallWidth - LastWallWidth))
+            {
+                FindObjectOfType<Procedural_generation>().windowsPerWall += 1;
+                LastWallWidth = wallWidth;
+            }
         }
+
+        // ------------------------width decrease + window decrease--------------------------------------- //
+
+
+        //float wallWidth = transform.localScale.x;
+
+        //float WallWidthExceeds = LastWallWidth / NumberOfWindowsPerWall;
+
+        //if (Mathf.RoundToInt(LastWallWidth) == Mathf.RoundToInt(wallWidth - WallWidthExceeds))
+        //{
+        //    FindObjectOfType<Procedural_generation>().windowsPerWall -= 1;
+        //    LastWallWidth = wallWidth;
+        //}
+
+
+        // ------------------------width decrease + window decrease--------------------------------------- //
+
+
+
         //if (currentInteractor.name.ToLower().Contains("left") && LeftGrabScaleDownWidth.action.IsPressed())
         //{
         //    // Scale only height (Y-axis)
@@ -130,36 +155,11 @@ public class Scale_windows : MonoBehaviour
     }
 
 
-    private void RescaleNeighbourWindow(bool scaleUp, Transform[] NeighbourWindows)
+    private void DeletePreviousWindows(Transform[] NeighbourWindows)
     {
-        float direction = scaleUp ? -1f : 1f;
-        
         foreach (Transform t in NeighbourWindows)
         {
-            if((t.transform.position - transform.position).magnitude > 0.2f)
-            { 
-                //Vector3 newScale = t.transform.localScale + Vector3.one * direction * scaleAmount;
-
-            // Clamp to minimum scale
-                //newScale = Vector3.Max(newScale, Vector3.one * 0.1f);
-
-                //t.transform.localScale = newScale;
-                if(transform.gameObject.GetComponent<Renderer>().bounds.Intersects(t.transform.gameObject.GetComponent<Renderer>().bounds))
-                {
-                    t.transform.gameObject.GetComponent<Renderer>().material.color = Color.red;
-                }
-                else if(!(transform.gameObject.GetComponent<Renderer>().bounds.Intersects(t.transform.gameObject.GetComponent<Renderer>().bounds)))
-                {
-                    t.transform.gameObject.GetComponent<Renderer>().material.color = Color.green;
-                }
-
-            }
-
-            if(Vector3.Distance(transform.position,t.transform.position) < 0.2f)
-            {
-                t.gameObject.GetComponent<Material>().color = Color.red;
-            }
-            
+            Destroy(t.gameObject);
         }
     }
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3520019778650607720}
   - component: {fileID: 4513828218068971411}
   - component: {fileID: 778044347417226941}
+  - component: {fileID: 668130807447372834}
   m_Layer: 0
   m_Name: Canvas H-W
   m_TagString: Untagged
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &778044347417226941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +104,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &668130807447372834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2993941363334402414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d825d0d821f2054e8a8db4a8d38ed5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4301773439984429375
 GameObject:
   m_ObjectHideFlags: 0

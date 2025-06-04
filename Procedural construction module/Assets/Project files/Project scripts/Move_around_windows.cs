@@ -10,7 +10,7 @@ public class Move_around_windows : MonoBehaviour
 
     public XRGrabInteractable grabInteractable;
 
-    [SerializeField] private InputActionProperty moveAction; // From controller
+    [SerializeField] public InputActionProperty moveAction; // From controller
     [SerializeField] private float moveSpeed = 0.5f;
 
     private bool isGrabbed = false;
@@ -58,19 +58,23 @@ public class Move_around_windows : MonoBehaviour
 
         Vector3 moveDirection = Vector3.zero;
 
+        if(input.x > 0 || input.x < 0)
+            moveDirection = new Vector3( 0, 0, input.x);
+        if (input.y > 0 || input.y < 0)
+            moveDirection = new Vector3(0,input.y, 0);
         // Choose axis
-        switch (movementAxis)
-        {
-            case Axis.X:
-                moveDirection = new Vector3(input.x, 0, 0);
-                break;
-            case Axis.Y:
-                moveDirection = new Vector3(0, input.y, 0);
-                break;
-            case Axis.Z:
-                moveDirection = new Vector3(0, 0, input.y); // forward/back
-                break;
-        }
+        //switch (movementAxis)
+        //{
+        //    case Axis.X:
+        //        moveDirection = new Vector3(input.x, 0, 0);
+        //        break;
+        //    case Axis.Y:
+        //        moveDirection = new Vector3(0, input.y, 0);
+        //        break;
+        //    case Axis.Z:
+        //        moveDirection = new Vector3(0, 0, input.y); // forward/back
+        //        break;
+        //}
 
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }

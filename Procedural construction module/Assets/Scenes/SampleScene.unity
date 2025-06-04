@@ -1178,6 +1178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Device Simulator
       objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1763,13 +1767,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e65cce1837f234197ff1745f13fa50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingWidth: 12
+  buildingWidth: 20
   buildingHeight: 4
   wallThickness: 0.3
-  wallPrefab: {fileID: 1313420845403184828, guid: 052ff638581a7e645818997bb18b91b5, type: 3}
-  windowPrefab: {fileID: 3532322536459750876, guid: 088a30287dcc8ba4388cbb16efa6ba57, type: 3}
+  wallPrefab: {fileID: 3532322536459750876, guid: c513117ef2c73b74a9337a170c1a8530, type: 3}
+  windowPrefab: {fileID: 3532322536459750876, guid: 6bad5e4886a6adf4abd802a8779d1a41, type: 3}
   doorPrefab: {fileID: 9067820177698868903, guid: 45fd85478c6008049818d457ed93c3f6, type: 3}
-  windowsPerWall: 4
+  windowsPerWall: 5
 --- !u!4 &814865360
 Transform:
   m_ObjectHideFlags: 0
@@ -2111,7 +2115,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   m_InvalidColorGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 1}
+    key0: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
     key1: {r: 1, g: 0, b: 0, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2136,7 +2140,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_ColorSpace: -1
+    m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   m_BlockedColorGradient:
@@ -3719,7 +3723,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   m_InvalidColorGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 1}
+    key0: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
     key1: {r: 1, g: 0, b: 0, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -3744,7 +3748,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_ColorSpace: -1
+    m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   m_BlockedColorGradient:
@@ -5121,6 +5125,7 @@ GameObject:
   - component: {fileID: 2004278355}
   - component: {fileID: 2004278359}
   - component: {fileID: 2004278358}
+  - component: {fileID: 2004278360}
   m_Layer: 0
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
@@ -5157,7 +5162,7 @@ MonoBehaviour:
   m_Camera: {fileID: 2015503635}
   m_OriginBaseGameObject: {fileID: 2004278354}
   m_CameraFloorOffsetObject: {fileID: 1390813469}
-  m_RequestedTrackingOriginMode: 2
+  m_RequestedTrackingOriginMode: 1
   m_CameraYOffset: 1.1176
 --- !u!4 &2004278357
 Transform:
@@ -5203,6 +5208,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Timeout: 10
   m_XROrigin: {fileID: 2004278356}
+--- !u!143 &2004278360
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004278354}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2015503631
 GameObject:
   m_ObjectHideFlags: 0
