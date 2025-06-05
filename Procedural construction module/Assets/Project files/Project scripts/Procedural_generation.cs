@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Procedural_generation : MonoBehaviour
 {
@@ -19,24 +20,33 @@ public class Procedural_generation : MonoBehaviour
 
     void GenerateBuilding()
     {
-        // FRONT WALL (with door)
-        GameObject frontWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(0, buildingHeight / 2, buildingWidth / 2), Quaternion.identity);
-        PlaceDoor(frontWall.transform, buildingWidth, buildingHeight);
 
-        // BACK WALL (with windows)
-        GameObject backWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(0, buildingHeight / 2, -buildingWidth / 2), Quaternion.Euler(0, 180, 0));
-        PlaceWindows(backWall.transform, buildingWidth);
+        if(SceneManager.GetActiveScene().name == "Room designing scene")
+        {
+            // FRONT WALL (with door)
+            GameObject frontWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(0, buildingHeight / 2, buildingWidth / 2), Quaternion.identity);
+            //PlaceDoor(frontWall.transform, buildingWidth, buildingHeight);
 
-        // LEFT WALL (with windows)
-        GameObject leftWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(-buildingWidth / 2, buildingHeight / 2, 0), Quaternion.Euler(0, -90, 0));
-        PlaceWindows(leftWall.transform, buildingWidth);
+            // BACK WALL (with windows)
+            GameObject backWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(0, buildingHeight / 2, -buildingWidth / 2), Quaternion.Euler(0, 180, 0));
+            PlaceWindows(backWall.transform, buildingWidth);
 
-        // RIGHT WALL (with windows)
-        GameObject rightWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(buildingWidth / 2, buildingHeight / 2, 0), Quaternion.Euler(0, 90, 0));
-        PlaceWindows(rightWall.transform, buildingWidth);
+            // LEFT WALL (with windows)
+            GameObject leftWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(-buildingWidth / 2, buildingHeight / 2, 0), Quaternion.Euler(0, -90, 0));
+            PlaceWindows(leftWall.transform, buildingWidth);
 
-        GenerateCeiling();
+            // RIGHT WALL (with windows)
+            GameObject rightWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(buildingWidth / 2, buildingHeight / 2, 0), Quaternion.Euler(0, 90, 0));
+            PlaceWindows(rightWall.transform, buildingWidth);
 
+            GenerateCeiling();
+        }
+
+        else if(SceneManager.GetActiveScene().name == "Wall designing scene")
+        {
+            GameObject backWall = InstantiateWall(buildingWidth, buildingHeight, new Vector3(0, buildingHeight / 2, -buildingWidth / 2), Quaternion.Euler(0, 180, 0));
+            PlaceWindows(backWall.transform, buildingWidth);
+        }
     }
 
     GameObject InstantiateWall(float width, float height, Vector3 position, Quaternion rotation)
@@ -74,11 +84,11 @@ public class Procedural_generation : MonoBehaviour
         for (int i = 1; i <= windowsPerWall; i++)
         {
             Vector3 windowPos = wall.position + wall.right * (spacing * i - wallWidth / 2);
-            windowPos.y += 0.05f; // typical window height
+            windowPos.y = buildingHeight/2; // typical window height
             windowPos.z -= wallThickness / 5;
             GameObject window = Instantiate(WindowPrefab, windowPos, wall.rotation);
             window.transform.parent = wall.transform;
-            Vector3 scaleWindow = new Vector3(window.transform.localScale.x,window.transform.localScale.y, window.transform.localScale.z + 1.5f);
+            Vector3 scaleWindow = new Vector3(window.transform.localScale.x,window.transform.localScale.y, window.transform.localScale.z + wallThickness + 2);
             window.transform.localScale = scaleWindow;
         }
     }

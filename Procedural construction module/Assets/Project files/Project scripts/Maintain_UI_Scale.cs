@@ -7,6 +7,7 @@ public class Maintain_UI_Scale : MonoBehaviour
     void Awake()
     {
         originalScale = transform.localScale;
+        transform.localScale = originalScale;
     }
 
     void LateUpdate()

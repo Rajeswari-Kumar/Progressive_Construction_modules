@@ -1,81 +1,63 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 
-[RequireComponent(typeof(XRGrabInteractable))]
 public class Move_around_windows : MonoBehaviour
 {
-    public enum Axis { X, Y, Z }
-    public Axis movementAxis = Axis.X;
 
-    public XRGrabInteractable grabInteractable;
+    [SerializeField] private float moveSpeed = 0.005f;
 
-    [SerializeField] public InputActionProperty moveAction; // From controller
-    [SerializeField] private float moveSpeed = 0.5f;
+    private bool isSelected = false;
+    private Camera mainCamera;
 
-    private bool isGrabbed = false;
-
-    private void Awake()
+    private void Start()
     {
-        grabInteractable = GetComponent<XRGrabInteractable>();
-        grabInteractable.selectEntered.AddListener(OnGrab);
-        grabInteractable.selectExited.AddListener(OnRelease);
-    }
-
-    private void OnEnable()
-    {
-        moveAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        moveAction.action.Disable();
-    }
-
-    private void OnDestroy()
-    {
-        grabInteractable.selectEntered.RemoveListener(OnGrab);
-        grabInteractable.selectExited.RemoveListener(OnRelease);
-    }
-
-    private void OnGrab(SelectEnterEventArgs args)
-    {
-        isGrabbed = true;
-    }
-
-    private void OnRelease(SelectExitEventArgs args)
-    {
-        isGrabbed = false;
+        mainCamera = Camera.main;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void Update()
     {
-        if (!isGrabbed) return;
+        HandleSelection();
 
-        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        if (isSelected)
+        {
+            MoveWithMouse();
+        }
+    }
 
-        if (input == Vector2.zero) return;
+    void HandleSelection()
+    {
+        if (Input.GetMouseButtonDown(0)) // Left click
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.yellow, 1f);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.transform == transform)
+                {
+                    isSelected = !isSelected; // Toggle selection
+                    transform.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+                }
+                else
+                {
+                    isSelected = false; // Deselect if clicked elsewhere
+                }
+            }
+            else
+            {
+                isSelected = false; // Deselect if clicked empty space
+            }
+        }
+    }
+
+    void MoveWithMouse()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
 
         Vector3 moveDirection = Vector3.zero;
 
-        if(input.x > 0 || input.x < 0)
-            moveDirection = new Vector3( 0, 0, input.x);
-        if (input.y > 0 || input.y < 0)
-            moveDirection = new Vector3(0,input.y, 0);
-        // Choose axis
-        //switch (movementAxis)
-        //{
-        //    case Axis.X:
-        //        moveDirection = new Vector3(input.x, 0, 0);
-        //        break;
-        //    case Axis.Y:
-        //        moveDirection = new Vector3(0, input.y, 0);
-        //        break;
-        //    case Axis.Z:
-        //        moveDirection = new Vector3(0, 0, input.y); // forward/back
-        //        break;
-        //}
-
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        moveDirection = new Vector3(mouseX, mouseY, 0);
+        transform.localPosition += moveDirection * moveSpeed;
     }
 }
