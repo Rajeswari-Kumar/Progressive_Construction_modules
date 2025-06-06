@@ -16,6 +16,7 @@ public class Procedural_generation : MonoBehaviour
     void Start()
     {
         GenerateBuilding();
+
     }
 
     void GenerateBuilding()

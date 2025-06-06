@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1044450957133982242}
   - component: {fileID: 399021946892040996}
   - component: {fileID: 4721044237637660176}
-  - component: {fileID: 6822094323982904852}
   - component: {fileID: 8552601210171311265}
   - component: {fileID: 7050222804343410271}
   - component: {fileID: 9017184486472865786}
@@ -110,20 +109,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6822094323982904852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3532322536459750876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 343dbc535ec968a41aabec734971d0df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Height: {fileID: 5946266488957487705}
-  Width: {fileID: 7380279764596232619}
 --- !u!54 &8552601210171311265
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -387,45 +372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14feba78e3ffeb7439f99f998592f1c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentInteractor: {fileID: 0}
   scaleAmount: 0.01
-  LastWallWidth: 0
-  LeftTriggerScaleUpWidth:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Left Trigger Scale Up Width
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: d3d6218e-0012-48e2-81cf-d71ea81bd175
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  RightTriggerScaleUpHeight:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Right Trigger Scale Up Height
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: f2090bab-d5e7-4cb7-8473-18fb34497681
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  XButtonScaleDownWidth:
-    m_UseReference: 1
-    m_Action:
-      m_Name: X Button Scale Down Width
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 8a90e8c3-4a4e-46ed-8cd5-cc0524775525
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -335775248641796371, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1001 &5956075588509462412
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -437,6 +386,10 @@ PrefabInstance:
     - target: {fileID: 2993941363334402414, guid: f0f1312a35d2fe8439381cda927e5725, type: 3}
       propertyPath: m_Name
       value: Canvas H-W
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993941363334402414, guid: f0f1312a35d2fe8439381cda927e5725, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4081080582451726805, guid: f0f1312a35d2fe8439381cda927e5725, type: 3}
       propertyPath: m_Pivot.x
@@ -523,28 +476,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0f1312a35d2fe8439381cda927e5725, type: 3}
---- !u!114 &5946266488957487705 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 12766348348597717, guid: f0f1312a35d2fe8439381cda927e5725, type: 3}
-  m_PrefabInstance: {fileID: 5956075588509462412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7380279764596232619 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3802232597572517415, guid: f0f1312a35d2fe8439381cda927e5725, type: 3}
-  m_PrefabInstance: {fileID: 5956075588509462412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &7641150727917463129 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4081080582451726805, guid: f0f1312a35d2fe8439381cda927e5725, type: 3}

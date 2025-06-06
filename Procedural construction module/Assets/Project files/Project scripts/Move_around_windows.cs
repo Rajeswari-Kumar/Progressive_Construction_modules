@@ -59,5 +59,6 @@ public class Move_around_windows : MonoBehaviour
 
         moveDirection = new Vector3(mouseX, mouseY, 0);
         transform.localPosition += moveDirection * moveSpeed;
+        transform.GetComponent<WindowEdgeDistanceDisplay>().UpdateCanvasPosition();
     }
 }

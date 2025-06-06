@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class Scale_wall : MonoBehaviour
 {
@@ -140,4 +142,6 @@ public class Scale_wall : MonoBehaviour
             Destroy(t.gameObject);
         }
     }
+
+
 }

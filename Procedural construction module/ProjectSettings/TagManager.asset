@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Window
+  - Window Canvas
   layers:
   - Default
   - TransparentFX
