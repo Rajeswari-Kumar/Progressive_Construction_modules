@@ -42,7 +42,7 @@ public class Height_Width_Display : MonoBehaviour
         windowToCanvasMap[window] = canvas;
         windowReferencePoints[window] = referencePoint;
 
-        Debug.Log($"Created canvas for window: {window.name}");
+        //Debug.Log($"Created canvas for window: {window.name}");
     }
 
     public bool HasCanvas(GameObject window)
@@ -98,7 +98,7 @@ public class Height_Width_Display : MonoBehaviour
 
         GameObject canvas = windowToCanvasMap[window];
 
-        Vector3 scale = window.transform.lossyScale;
+        Vector3 scale = window.transform.localScale * 10;
         float width = Mathf.Round(scale.x * 100f) / 100f;
         float height = Mathf.Round(scale.y * 100f) / 100f;
 

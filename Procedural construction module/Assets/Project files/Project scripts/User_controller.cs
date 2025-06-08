@@ -28,6 +28,8 @@ public class User_controller : MonoBehaviour
         // --- Mouse X to rotate character (horizontal view) ---
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         transform.Rotate(Vector3.up * mouseX);  // Rotate around Y axis
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        transform.Rotate(Vector3.right * -mouseY);  // Rotate around Y axis
 
         // Movement input
         float horizontal = Input.GetAxis("Horizontal"); // A, D

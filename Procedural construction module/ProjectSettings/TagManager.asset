@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Window
   - Window Canvas
+  - Wall
+  - Fixture template
+  - Furniture
+  - Floor
   layers:
   - Default
   - TransparentFX

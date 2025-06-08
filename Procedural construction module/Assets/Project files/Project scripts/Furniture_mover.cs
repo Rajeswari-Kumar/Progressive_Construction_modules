@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Move_around_windows : MonoBehaviour
+public class Furniture_mover : MonoBehaviour
 {
 
     [SerializeField] private float moveSpeed = 0.005f;
@@ -35,7 +35,7 @@ public class Move_around_windows : MonoBehaviour
                 if (hit.transform == transform)
                 {
                     isSelected = !isSelected; // Toggle selection
-                    //transform.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+                    transform.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
                 }
                 else
                 {
@@ -53,10 +53,10 @@ public class Move_around_windows : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
+        Debug.Log(mouseX + " " + mouseY);
         Vector3 moveDirection = Vector3.zero;
 
-        moveDirection = new Vector3(mouseX, mouseY, 0);
+        moveDirection = new Vector3(mouseX, 0, mouseY);
         transform.localPosition += moveDirection * moveSpeed;
-        transform.GetComponent<WindowEdgeDistanceDisplay>().UpdateCanvasAndLines();
     }
 }

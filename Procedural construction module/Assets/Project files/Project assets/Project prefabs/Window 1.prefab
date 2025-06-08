@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.2162, y: 0.380504, z: -1.1845}
-  m_LocalScale: {x: 0.57340467, y: 1.2447077, z: 0.11188385}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4815836389331163013}
@@ -194,6 +194,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasPrefab: {fileID: 6877098793403368488, guid: c6f89753398485a44a1a13d7da337b21, type: 3}
   canvasOffset: {x: 0, y: 0.2, z: 0}
+  edgeSphereRadius: 0.025
+  edgeSphereMaterial: {fileID: 0}
 --- !u!1 &4958827612605656499
 GameObject:
   m_ObjectHideFlags: 0

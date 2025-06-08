@@ -45,7 +45,9 @@ public class Scale_windows : MonoBehaviour
         // Proportional scaling to neighbors
         if (scaled && ProportionalScalingOrManualScaling.ProportionalScalingWindow)
         {
-            RescaleNeighbourWindow(GetNeighbourWindows());
+            bool scaleWidth = Input.GetMouseButton(1);  // Right mouse
+            bool scaleHeight = Input.GetMouseButton(0); // Left mouse
+            RescaleNeighbourWindow(GetNeighbourWindows(), scaleWidth, scaleHeight);
         }
     }
 
@@ -63,7 +65,7 @@ public class Scale_windows : MonoBehaviour
 
                     isSelected = true;
                     currentSelectedWindow = this;
-                    GetComponent<Renderer>().material.color = Color.yellow;
+                    //GetComponent<Renderer>().material.color = Color.yellow;
                 }
                 else if (currentSelectedWindow == this)
                 {
@@ -81,7 +83,7 @@ public class Scale_windows : MonoBehaviour
     {
         isSelected = false;
         currentSelectedWindow = null;
-        GetComponent<Renderer>().material.color = Color.white;
+        //GetComponent<Renderer>().material.color = Color.white;
     }
 
     private void ScaleWindowHeight(float delta)
@@ -90,6 +92,7 @@ public class Scale_windows : MonoBehaviour
         newScale.y += delta * scaleAmount;
         newScale.y = Mathf.Max(newScale.y, 0.1f); // Minimum height
         transform.localScale = newScale;
+        //transform.GetComponent<WindowEdgeDistanceDisplay>().UpdateCanvasAndLines();
     }
 
     private void ScaleWindowWidth(float delta)
@@ -98,6 +101,7 @@ public class Scale_windows : MonoBehaviour
         newScale.x += delta * scaleAmount;
         newScale.x = Mathf.Max(newScale.x, 0.1f); // Minimum width
         transform.localScale = newScale;
+        transform.GetComponent<WindowEdgeDistanceDisplay>().UpdateCanvasAndLines();
     }
 
     private Transform[] GetNeighbourWindows()
@@ -117,28 +121,22 @@ public class Scale_windows : MonoBehaviour
         return neighbours.ToArray();
     }
 
-    private void RescaleNeighbourWindow(Transform[] NeighbourWindows)
+    private void RescaleNeighbourWindow(Transform[] NeighbourWindows, bool scaleWidth, bool scaleHeight)
     {
         foreach (Transform t in NeighbourWindows)
         {
             Vector3 newScale = t.localScale;
-            newScale.x = Mathf.Max(transform.localScale.x, 0.1f);
-            newScale.y = Mathf.Max(transform.localScale.y, 0.1f);
+
+            if (scaleWidth)
+                newScale.x = Mathf.Max(transform.localScale.x, 0.1f);
+
+            if (scaleHeight)
+                newScale.y = Mathf.Max(transform.localScale.y, 0.1f);
+
             t.localScale = newScale;
-
-            Renderer thisRenderer = GetComponent<Renderer>();
-            Renderer thatRenderer = t.GetComponent<Renderer>();
-
-            if (thisRenderer.bounds.Intersects(thatRenderer.bounds))
-            {
-                thatRenderer.material.color = Color.red;
-            }
-            else
-            {
-                thatRenderer.material.color = Color.green;
-            }
         }
     }
+
 
     public void ToggleCanvasFunction()
     {

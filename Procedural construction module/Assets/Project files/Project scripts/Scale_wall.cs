@@ -61,7 +61,8 @@ public class Scale_wall : MonoBehaviour
 
                     isSelected = true;
                     currentSelectedWall = this;
-                    wallRenderer.material.color = selectedColor;
+                    //wallRenderer.material.color = selectedColor;
+                    //MakeWallTransparent(1, this.gameObject);
                 }
                 else if (currentSelectedWall == this)
                 {
@@ -79,7 +80,7 @@ public class Scale_wall : MonoBehaviour
     {
         isSelected = false;
         currentSelectedWall = null;
-        wallRenderer.material.color = defaultColor;
+        //wallRenderer.material.color = defaultColor;
     }
 
     private void ScaleHeight(float delta)
@@ -142,6 +143,25 @@ public class Scale_wall : MonoBehaviour
             Destroy(t.gameObject);
         }
     }
+    void MakeWallTransparent(float transparency, GameObject wall)
+    {
+        Renderer wallRenderer = wall.GetComponent<Renderer>();
+        if (wallRenderer == null) return;
 
+        Material mat = wallRenderer.material;
+        if (mat == null) return;
 
+        mat.SetFloat("_Mode", 3);
+        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        mat.SetInt("_ZWrite", 0);
+        mat.DisableKeyword("_ALPHATEST_ON");
+        mat.EnableKeyword("_ALPHABLEND_ON");
+        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+
+        Color color = mat.color;
+        color.a = transparency;
+        mat.color = color;
+    }
 }

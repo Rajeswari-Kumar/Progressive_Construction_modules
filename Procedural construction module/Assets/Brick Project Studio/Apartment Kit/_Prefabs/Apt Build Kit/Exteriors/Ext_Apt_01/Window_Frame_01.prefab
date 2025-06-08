@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6657664399550838562}
   - component: {fileID: 2817770068129551088}
   - component: {fileID: 6609718012967769905}
-  - component: {fileID: 2760207838890933452}
   - component: {fileID: 4006262834606086991}
   - component: {fileID: 4233675689124066259}
+  - component: {fileID: 3309706197331106672}
+  - component: {fileID: -4192722010789074017}
   m_Layer: 0
   m_Name: Window_Frame_01
   m_TagString: Window
@@ -110,20 +111,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3156789233897332337, guid: cd0bf29c9c9af6f4098b74076d25f0cd, type: 3}
---- !u!114 &2760207838890933452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2818747302613610318}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 343dbc535ec968a41aabec734971d0df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Height: {fileID: 0}
-  Width: {fileID: 0}
 --- !u!114 &4006262834606086991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +139,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.005
+--- !u!114 &3309706197331106672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818747302613610318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54ccee4f0a02b3741ad0196dbe7498e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4192722010789074017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818747302613610318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3dd346f27127134799dbaea3a33fae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasPrefab: {fileID: 6877098793403368488, guid: c6f89753398485a44a1a13d7da337b21, type: 3}
+  canvasOffset: {x: 0, y: 2, z: 0}
+  edgeSphereRadius: 0.025
+  edgeSphereMaterial: {fileID: 0}
 --- !u!1 &3682606475046064539
 GameObject:
   m_ObjectHideFlags: 0
